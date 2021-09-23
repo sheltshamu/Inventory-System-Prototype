@@ -16,10 +16,11 @@ public class EmployeeResponse {
     private String email;
 
     public EmployeeResponse(Employee employee){
+        this.id=employee.getId();
         this.firstname=employee.getFirstname();
         this.lastname=employee.getLastname();
         this.dateOfBirth=employee.getDateOfBirth();
-        this.dateOfBirth=employee.getDateOfBirth();
+        this.phoneNumber=employee.getPhoneNumber();
         this.email=employee.getEmail();
     }
 }

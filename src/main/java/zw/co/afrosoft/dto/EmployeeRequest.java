@@ -1,6 +1,7 @@
 package zw.co.afrosoft.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import zw.co.afrosoft.domain.Employee;
 
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 
 @Setter
 @Getter
+@NoArgsConstructor
 public class EmployeeRequest {
     private Long id;
     private String firstname;
