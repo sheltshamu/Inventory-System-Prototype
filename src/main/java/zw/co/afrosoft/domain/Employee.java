@@ -2,6 +2,7 @@ package zw.co.afrosoft.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import zw.co.afrosoft.dto.EmployeeRequest;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +23,13 @@ public class Employee {
 	private String phoneNumber;
 	private String email;
 
+	public Employee(EmployeeRequest employeeRequest){
+		this.firstname=employeeRequest.getFirstname();
+		this.lastname=employeeRequest.getLastname();
+		this.dateOfBirth=employeeRequest.getDateOfBirth();
+		this.phoneNumber=employeeRequest.getPhoneNumber();
+		this.email=employeeRequest.getEmail();
+	}
 
 	public String getFirstname() {
 		return firstname;
