@@ -5,9 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import zw.co.afrosoft.domain.Employee;
 import zw.co.afrosoft.dto.EmployeeRequest;
+import zw.co.afrosoft.dto.EmployeeResponse;
 import zw.co.afrosoft.persistence.EmployeeRepository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -32,12 +36,13 @@ public class EmployeeService {
 
     public Employee update(EmployeeRequest employeeRequest){
         Employee employee = employeeRepository.getById(employeeRequest.getId());
-        employee.setFirstname(employeeRequest.getFirstname());
-        employee.setLastname(employeeRequest.getLastname());
-        employee.setDateOfBirth(employeeRequest.getDateOfBirth());
-        employee.setPhoneNumber(employeeRequest.getPhoneNumber());
-        employee.setEmail(employeeRequest.getEmail());
+        if (!employeeRequest.getFirstname().isEmpty()&& employeeRequest.getFirstname()!=null)
+            employee.setFirstname(employeeRequest.getFirstname());
         employeeRepository.save(employee);
         return employee;
+    }
+
+    public List<Employee> listAll(){
+        return employeeRepository.findAll();
     }
 }

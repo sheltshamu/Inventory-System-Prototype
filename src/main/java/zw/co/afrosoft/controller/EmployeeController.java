@@ -11,6 +11,11 @@ import zw.co.afrosoft.dto.EmployeeRequest;
 import zw.co.afrosoft.dto.EmployeeResponse;
 import zw.co.afrosoft.service.EmployeeService;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/api/v1/employee")
 public class EmployeeController {
@@ -42,6 +47,18 @@ public class EmployeeController {
         employeeService.update(employeeRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
+    @GetMapping("/getAll")
+    public List<EmployeeResponse> getAll(){
+       List<Employee> employeeList = employeeService.listAll();
+       List<EmployeeResponse> employeeResponseList = new ArrayList<>();
+
+       employeeList.stream().filter(employee -> employeeResponseList.add(new EmployeeResponse(employee)));
+
+       return employeeResponseList;
+    }
+
 
 
 }
