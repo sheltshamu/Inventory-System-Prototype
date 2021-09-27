@@ -2,6 +2,8 @@ package zw.co.afrosoft.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import zw.co.afrosoft.dto.CategoryRequest;
+import zw.co.afrosoft.dto.CategoryResponse;
 
 import javax.persistence.*;
 
@@ -16,6 +18,11 @@ public class Category {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length=10)
 	private Abbreviation abbreviation;
+
+	public Category(CategoryRequest categoryRequest){
+		this.id=categoryRequest.getId();
+		this.abbreviation=categoryRequest.getAbbreviation();
+	}
 
 	public Abbreviation getAbbreviation() {
 		return abbreviation;
