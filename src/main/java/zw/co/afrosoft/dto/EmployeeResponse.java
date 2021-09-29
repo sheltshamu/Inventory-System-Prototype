@@ -8,19 +8,10 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class EmployeeResponse {
-    private Long id;
-    private String firstname;
-    private String lastname;
-    private LocalDate dateOfBirth;
-    private String phoneNumber;
-    private String email;
+    private final Employee employee;
 
-    public EmployeeResponse(Employee employee){
-        this.id=employee.getId();
-        this.firstname=employee.getFirstname();
-        this.lastname=employee.getLastname();
-        this.dateOfBirth=employee.getDateOfBirth();
-        this.phoneNumber=employee.getPhoneNumber();
-        this.email=employee.getEmail();
+    public EmployeeResponse(Employee employee) {
+        this.employee = employee;
     }
+
 }

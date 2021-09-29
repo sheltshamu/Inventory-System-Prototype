@@ -19,6 +19,5 @@ public class CategoryResponse {
 
     public CategoryResponse(Category category){
         this.abbreviation=category.getAbbreviation();
-
     }
 }

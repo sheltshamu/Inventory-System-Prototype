@@ -1,25 +1,15 @@
 package zw.co.afrosoft.service;
 
 import org.springframework.stereotype.Service;
-import zw.co.afrosoft.domain.Category;
 import zw.co.afrosoft.domain.Product;
-import zw.co.afrosoft.dto.CategoryRequest;
-import zw.co.afrosoft.dto.CategoryResponse;
-import zw.co.afrosoft.persistence.CategoryRepository;
-import zw.co.afrosoft.persistence.ProductRepository;
+import zw.co.afrosoft.dto.ProductRequest;
+
+import java.util.List;
 
 @Service
-public class ProductService {
+public interface ProductService {
 
-    private  final ProductRepository productRepository;
-    private final CategoryRepository categoryRepository;
+    Product create(ProductRequest productRequest);
 
-    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
-        this.productRepository = productRepository;
-        this.categoryRepository = categoryRepository;
-    }
-
-    public Product create(CategoryRequest categoryRequest){
-        Category category = ca
-    }
+    List<Product> listAll();
 }

@@ -12,17 +12,16 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 public class EmployeeRequest {
-    @NotBlank
+   // @NotBlank
     private Long id;
-    @NotBlank
+
     private String firstname;
-    @NotBlank
+   // @NotBlank
     private String lastname;
-    @NotBlank
     private LocalDate dateOfBirth;
-    @NotBlank
+   // @NotBlank
     private String phoneNumber;
-    @NotBlank
+   // @NotBlank
     private String email;
 
     public EmployeeRequest(Employee employee){

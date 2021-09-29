@@ -2,6 +2,7 @@ package zw.co.afrosoft.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import zw.co.afrosoft.dto.ProductRequest;
 
 import javax.persistence.*;
 @AllArgsConstructor
@@ -30,6 +31,16 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category category;
+
+	public Product(ProductRequest productRequest){
+		this.id=productRequest.getId();
+		this.name=productRequest.getName();
+		this.category= productRequest.getCategory();
+		this.description= productRequest.getDescription();
+		this.purchasePrice=productRequest.getPurchasePrice();
+		this.quantityOnHand= productRequest.getQuantityOnHand();
+		this.sellingPrice= productRequest.getSellingPrice();
+	}
 	
 
 	public String getName() {
