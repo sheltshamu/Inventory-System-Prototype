@@ -2,34 +2,24 @@ package zw.co.afrosoft.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import zw.co.afrosoft.dto.EmployeeRequest;
+import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Employee {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+@ToString
+@Entity
+public class Employee extends  BaseEntity{
+	@Column(nullable = false)
 	private String firstname;
 	private String lastname;
 	private LocalDate dateOfBirth;
 	private String phoneNumber;
 	private String email;
-
-	public Employee(EmployeeRequest employeeRequest){
-		this.firstname=employeeRequest.getFirstname();
-		this.lastname=employeeRequest.getLastname();
-		this.dateOfBirth=employeeRequest.getDateOfBirth();
-		this.phoneNumber=employeeRequest.getPhoneNumber();
-		this.email=employeeRequest.getEmail();
-	}
+	@Embedded
+	private AuditInformation auditInformation;
 
 	public String getFirstname() {
 		return firstname;
@@ -70,12 +60,6 @@ public class Employee {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public Long getId() {
-		return id;
-	}
-	
-	
 
 
 }

@@ -1,21 +1,21 @@
 package zw.co.afrosoft.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import zw.co.afrosoft.domain.Category;
 import zw.co.afrosoft.domain.Product;
-import zw.co.afrosoft.dto.CategoryRequest;
-import zw.co.afrosoft.dto.CategoryResponse;
-import zw.co.afrosoft.dto.ProductRequest;
+import zw.co.afrosoft.dto.request.ProductRequest;
 import zw.co.afrosoft.persistence.CategoryRepository;
 import zw.co.afrosoft.persistence.ProductRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
+    Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
-    private  final ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     private final CategoryRepository categoryRepository;
 
@@ -24,18 +24,20 @@ public class ProductServiceImpl implements ProductService{
         this.categoryRepository = categoryRepository;
     }
 
-    public Product create(ProductRequest productRequest){
-        Optional<Category> category = categoryRepository.findById(productRequest.getCategory().getId());
-        if (productRequest==null){
-           productRequest = new ProductRequest();
-           productRequest.setCategory(category.get());
-        }
-        Product product = new Product(productRequest);
+    public Product create(ProductRequest productRequest) {
+       // logger.info("Category ={}", categoryRepository.getById(productRequest.getCategoryId()));
+        Category category = categoryRepository.findById(productRequest.getCategoryId()).get();
+        Product product = new Product();
+        product.setName(productRequest.getName());
+        product.setDescription(productRequest.getDescription());
+        product.setPurchasePrice(productRequest.getPurchasePrice());
+        product.setSellingPrice(productRequest.getSellingPrice());
+        product.setQuantityOnHand(productRequest.getQuantityOnHand());
+        product.setCategory(category);
         return productRepository.save(product);
-
     }
 
-    public List<Product> listAll(){
-       return productRepository.findAll();
+    public List<Product> listAll() {
+        return productRepository.findAll();
     }
 }

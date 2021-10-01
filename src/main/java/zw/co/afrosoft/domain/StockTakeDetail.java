@@ -2,8 +2,10 @@ package zw.co.afrosoft.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

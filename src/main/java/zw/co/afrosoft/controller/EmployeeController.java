@@ -6,8 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zw.co.afrosoft.domain.Employee;
-import zw.co.afrosoft.dto.EmployeeRequest;
-import zw.co.afrosoft.dto.EmployeeResponse;
+import zw.co.afrosoft.dto.request.EmployeeRequest;
+import zw.co.afrosoft.dto.response.EmployeeResponse;
 import zw.co.afrosoft.service.EmployeeService;
 import zw.co.afrosoft.service.EmployeeServiceImpl;
 
@@ -39,17 +39,12 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
-    /*
-    @PutMapping("/update/{id}")
+    @PutMapping("/update")
     public EmployeeResponse update(@RequestBody EmployeeRequest employeeRequest) {
         logger.info("Update Employee: EmployeeRequest={}" + employeeRequest);
         Employee employee = employeeService.update(employeeRequest);
         return new EmployeeResponse(employee);
     }
-
-     */
-
 
     @GetMapping("/getAll")
    public List<EmployeeResponse> getAll(){
@@ -58,7 +53,4 @@ public class EmployeeController {
         employees.stream().forEach(employee -> employeeResponseList.add(new EmployeeResponse(employee)));
         return employeeResponseList;
     }
-
-
-
 }

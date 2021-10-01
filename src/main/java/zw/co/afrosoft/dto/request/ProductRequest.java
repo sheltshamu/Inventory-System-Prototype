@@ -1,27 +1,22 @@
-package zw.co.afrosoft.dto;
+package zw.co.afrosoft.dto.request;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import zw.co.afrosoft.domain.Category;
 
 import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductRequest {
-    @NotBlank
-    private Long id;
-    @NotBlank
     private String name;
-    @NotBlank
     private String description;
-    @NotBlank
     private double purchasePrice;
-    @NotBlank
     private double sellingPrice;
-    @NotBlank
     private int quantityOnHand;
-    @NotBlank
-    private Category category;
+    private Long  categoryId;
+
 
 }

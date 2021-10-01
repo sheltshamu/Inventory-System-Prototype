@@ -2,17 +2,15 @@ package zw.co.afrosoft.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import zw.co.afrosoft.dto.ProductRequest;
+import lombok.ToString;
 
 import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
-public class Product {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
+public class Product extends BaseEntity{
+
 	@Column(nullable = false,length = 25)
 	private String name;
 	
@@ -31,17 +29,6 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category category;
-
-	public Product(ProductRequest productRequest){
-		this.id=productRequest.getId();
-		this.name=productRequest.getName();
-		this.category= productRequest.getCategory();
-		this.description= productRequest.getDescription();
-		this.purchasePrice=productRequest.getPurchasePrice();
-		this.quantityOnHand= productRequest.getQuantityOnHand();
-		this.sellingPrice= productRequest.getSellingPrice();
-	}
-	
 
 	public String getName() {
 		return name;
@@ -91,13 +78,5 @@ public class Product {
 		this.category = category;
 	}
 
-	public Long getId() {
-		return id;
-	}
-	
-	
-	
-	
-	
 
 }

@@ -1,19 +1,15 @@
 package zw.co.afrosoft.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
+import zw.co.afrosoft.domain.AuditInformation;
 import zw.co.afrosoft.domain.Employee;
-import zw.co.afrosoft.dto.EmployeeRequest;
-import zw.co.afrosoft.dto.EmployeeResponse;
+import zw.co.afrosoft.dto.request.EmployeeRequest;
 import zw.co.afrosoft.persistence.EmployeeRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -28,8 +24,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee create(EmployeeRequest employeeRequest) {
-        Employee employee = new Employee(employeeRequest);
-        if (employee!=null)
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        AuditInformation auditInformation = new AuditInformation();
+        auditInformation.setDateCreated(currentDateTime);
+        auditInformation.setDateCreated(currentDateTime);
+        Employee employee = new Employee();
+        if (employee==null)
+            employee.setFirstname(employeeRequest.getFirstname());
+            employee.setLastname(employeeRequest.getLastname());
+            employee.setDateOfBirth(employeeRequest.getDateOfBirth());
+            employee.setPhoneNumber(employeeRequest.getPhoneNumber());
+            employee.setEmail(employeeRequest.getEmail());
             employeeRepository.save(employee);
         return employee;
     }
@@ -42,7 +47,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee update(EmployeeRequest employeeRequest) {
-        return null;
+        Employee employee = new Employee();
+        return employeeRepository.save(employee);
     }
 
     @Override
@@ -68,7 +74,6 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employee.setFirstname(employeeRequest.getFirstname());
         return employee;
     }
-
      */
 
 

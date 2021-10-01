@@ -1,8 +1,8 @@
-package zw.co.afrosoft.dto;
+package zw.co.afrosoft.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;
-import zw.co.afrosoft.domain.Abbreviation;
+import lombok.ToString;
 import zw.co.afrosoft.domain.Category;
 
 import javax.persistence.Column;
@@ -12,12 +12,11 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
+@ToString
 public class CategoryResponse {
-    private Long id;
-    @NotBlank
-    private Abbreviation abbreviation;
+    private final Category category;
 
-    public CategoryResponse(Category category){
-        this.abbreviation=category.getAbbreviation();
+    public CategoryResponse(Category category) {
+        this.category = category;
     }
 }

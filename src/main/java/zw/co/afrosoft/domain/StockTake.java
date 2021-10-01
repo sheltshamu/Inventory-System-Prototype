@@ -2,10 +2,12 @@ package zw.co.afrosoft.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
