@@ -2,8 +2,9 @@ package zw.co.afrosoft.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import zw.co.afrosoft.domain.AuditInformation;
+import org.springframework.util.StringUtils;
 import zw.co.afrosoft.domain.Employee;
+import zw.co.afrosoft.dto.UpdateEmployeeRequest;
 import zw.co.afrosoft.dto.request.EmployeeRequest;
 import zw.co.afrosoft.persistence.EmployeeRepository;
 
@@ -25,17 +26,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee create(EmployeeRequest employeeRequest) {
         LocalDateTime currentDateTime = LocalDateTime.now();
-        AuditInformation auditInformation = new AuditInformation();
-        auditInformation.setDateCreated(currentDateTime);
-        auditInformation.setDateCreated(currentDateTime);
         Employee employee = new Employee();
-        if (employee==null)
-            employee.setFirstname(employeeRequest.getFirstname());
-            employee.setLastname(employeeRequest.getLastname());
-            employee.setDateOfBirth(employeeRequest.getDateOfBirth());
-            employee.setPhoneNumber(employeeRequest.getPhoneNumber());
-            employee.setEmail(employeeRequest.getEmail());
-            employeeRepository.save(employee);
+        employee.setDateCreated(currentDateTime);
+        employee.setDateModified(currentDateTime);
+        employee.setFirstname(employeeRequest.getFirstname());
+        employee.setLastname(employeeRequest.getLastname());
+        employee.setDateOfBirth(employeeRequest.getDateOfBirth());
+        employee.setPhoneNumber(employeeRequest.getPhoneNumber());
+        employee.setEmail(employeeRequest.getEmail());
+        employeeRepository.save(employee);
         return employee;
     }
 
@@ -46,8 +45,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     @Override
-    public Employee update(EmployeeRequest employeeRequest) {
-        Employee employee = new Employee();
+    public Employee update(UpdateEmployeeRequest updateEmployeeRequest) {
+       Employee employee = employeeRepository.findById(updateEmployeeRequest.getId()).get();
+       employee.setPhoneNumber(updateEmployeeRequest.getPhoneNumber());
+       employee.setFirstname(updateEmployeeRequest.getFirstname());
+       employee.setLastname(updateEmployeeRequest.getLastname());
+       employee.setEmail(updateEmployeeRequest.getEmail());
+       employee.setDateOfBirth(updateEmployeeRequest.getDateOfBirth());
+       employee.setEmail(updateEmployeeRequest.getEmail());
         return employeeRepository.save(employee);
     }
 
@@ -59,23 +64,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee getEmployeeById(Long id) {
         Optional<Employee> employee = employeeRepository.findById(id);
-        if (!employee.isPresent()){
-            throw new RuntimeException("Not Found");
+        if (!employee.isPresent()) {
+            throw new RuntimeException("Employee "+ id + "Not Found");
         }
-         return employee.get();
+        return employee.get();
     }
-
-    /*
-    public Employee update(EmployeeRequest employeeRequest){
-        Employee employee = employeeRepository.findById(employeeRequest.getId()).orElseThrow(RuntimeException::new);
-            if (!employeeRequest.getFirstname().isEmpty() && employeeRequest.getFirstname() != null){
-                employee.setFirstname(employeeRequest.getFirstname());
-        }else if(!employeeRequest.getLastname().isEmpty() && employeeRequest.getLastname() != null){
-                employee.setFirstname(employeeRequest.getFirstname());
-        return employee;
-    }
-     */
-
-
-
 }

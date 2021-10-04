@@ -10,6 +10,7 @@ import zw.co.afrosoft.dto.response.ProductResponse;
 import zw.co.afrosoft.persistence.CategoryRepository;
 import zw.co.afrosoft.service.ProductServiceImpl;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class ProductController {
     }
 
     @PostMapping(path = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ProductResponse create(@RequestBody ProductRequest productRequest){
+    public ProductResponse create(@Valid @RequestBody ProductRequest productRequest){
         logger.info("Create Product: productRequest={}", productRequest);
       Product product = productService.create(productRequest);
       return new ProductResponse(product);

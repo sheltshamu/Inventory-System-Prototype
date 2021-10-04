@@ -15,11 +15,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryRequest {
-    private Long id;
     @NotBlank
     private String name;
-    @NotNull
-    private LocalDateTime dateCreated;
-    @NotNull
-    private LocalDateTime dateModified;
 }

@@ -6,6 +6,7 @@ import zw.co.afrosoft.dto.request.CategoryRequest;
 import zw.co.afrosoft.dto.response.CategoryResponse;
 import zw.co.afrosoft.service.CategoryService;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class CategoryController {
     }
 
    @PostMapping("/create")
-    public CategoryResponse create(@RequestBody CategoryRequest categoryRequest){
+    public CategoryResponse create(@Valid @RequestBody CategoryRequest categoryRequest){
         Category category = categoryService.create(categoryRequest);
         return new CategoryResponse(category);
    }
@@ -41,13 +42,4 @@ public class CategoryController {
         categoryService.delete(id);
    }
 
-   /*
-   @PutMapping("/update")
-    public CategoryResponse update(@RequestBody CategoryRequest categoryRequest){
-        Category category = new Category();
-        category.setName(categoryRequest.getName());
-        return new CategoryResponse(category);
-   }
-
-    */
 }

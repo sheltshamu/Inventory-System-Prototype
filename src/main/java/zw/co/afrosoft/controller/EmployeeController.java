@@ -6,11 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zw.co.afrosoft.domain.Employee;
+import zw.co.afrosoft.dto.UpdateEmployeeRequest;
 import zw.co.afrosoft.dto.request.EmployeeRequest;
 import zw.co.afrosoft.dto.response.EmployeeResponse;
 import zw.co.afrosoft.service.EmployeeService;
 import zw.co.afrosoft.service.EmployeeServiceImpl;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/save")
-    public EmployeeResponse save(@RequestBody EmployeeRequest employeeRequest){
+    public EmployeeResponse save(@Valid @RequestBody EmployeeRequest employeeRequest){
         logger.info("Save Employee: EmployeeRequest={}" +employeeRequest);
         Employee employee = employeeService.create(employeeRequest);
         return new EmployeeResponse(employee);
@@ -40,9 +42,9 @@ public class EmployeeController {
     }
 
     @PutMapping("/update")
-    public EmployeeResponse update(@RequestBody EmployeeRequest employeeRequest) {
-        logger.info("Update Employee: EmployeeRequest={}" + employeeRequest);
-        Employee employee = employeeService.update(employeeRequest);
+    public EmployeeResponse update(@Valid @RequestBody UpdateEmployeeRequest updateEmployeeRequest) {
+        logger.info("Update Employee: EmployeeRequest={}" + updateEmployeeRequest);
+        Employee employee = employeeService.update(updateEmployeeRequest);
         return new EmployeeResponse(employee);
     }
 

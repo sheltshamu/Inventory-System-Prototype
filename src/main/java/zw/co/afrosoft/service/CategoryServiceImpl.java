@@ -1,8 +1,8 @@
 package zw.co.afrosoft.service;
 
 import org.springframework.stereotype.Service;
-import zw.co.afrosoft.domain.AuditInformation;
 import zw.co.afrosoft.domain.Category;
+import zw.co.afrosoft.dto.UpdateCategoryRequest;
 import zw.co.afrosoft.dto.request.CategoryRequest;
 import zw.co.afrosoft.persistence.CategoryRepository;
 
@@ -22,11 +22,9 @@ public class CategoryServiceImpl implements CategoryService {
     public Category create(CategoryRequest categoryRequest) {
         Category category = new Category();
         LocalDateTime currentDateTime = LocalDateTime.now();
-        AuditInformation auditInformation = new AuditInformation();
-        auditInformation.setDateCreated(currentDateTime);
-        auditInformation.setDateModified(currentDateTime);
+        category.setDateCreated(currentDateTime);
+        category.setDateModified(currentDateTime);
         category.setName(categoryRequest.getName());
-        category.setAuditInformation(auditInformation);
         categoryRepository.save(category);
         return category;
     }
@@ -42,9 +40,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category update(CategoryRequest categoryRequest) {
-        Category category = categoryRepository.findById(categoryRequest.getId()).get();
-        category.setName(categoryRequest.getName());
+    public Category update(UpdateCategoryRequest updateCategoryRequest) {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        Category category = categoryRepository.findById(updateCategoryRequest.getId()).get();
+        category.setDateModified(currentDateTime);
+        category.setName(updateCategoryRequest.getName());
         return category;
     }
 

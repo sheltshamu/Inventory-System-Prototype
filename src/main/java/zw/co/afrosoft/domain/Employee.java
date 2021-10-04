@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -12,14 +13,16 @@ import java.time.LocalDate;
 @ToString
 @Entity
 public class Employee extends  BaseEntity{
-	@Column(nullable = false)
+	@Column(nullable = false,length = 25)
 	private String firstname;
+	@Column(nullable = false,length = 25)
 	private String lastname;
+	@Column(nullable = false,length = 25)
 	private LocalDate dateOfBirth;
+	@Column(unique = true,length = 10)
 	private String phoneNumber;
+	@Email
 	private String email;
-	@Embedded
-	private AuditInformation auditInformation;
 
 	public String getFirstname() {
 		return firstname;

@@ -1,14 +1,10 @@
 package zw.co.afrosoft.dto.request;
 
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import zw.co.afrosoft.domain.AuditInformation;
-import zw.co.afrosoft.domain.Employee;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -17,13 +13,17 @@ import java.time.LocalDateTime;
 @ToString
 public class EmployeeRequest {
     @NotNull
+    @NotBlank(message = "firstname is required")
     private String firstname;
-   @NotNull
+    @NotNull
+    @NotBlank(message = "lastname is required")
     private String lastname;
-   @NotNull
+    @NotNull
+    @NotBlank(message = "date of birth is required")
     private LocalDate dateOfBirth;
-   @NotNull
+    @NotNull
+    @NotBlank(message = "firstname is required")
     private String phoneNumber;
-   @NotNull
+
     private String email;
 }

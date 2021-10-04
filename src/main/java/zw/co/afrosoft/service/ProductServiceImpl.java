@@ -5,11 +5,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import zw.co.afrosoft.domain.Category;
 import zw.co.afrosoft.domain.Product;
+import zw.co.afrosoft.dto.UpdateProductRequest;
 import zw.co.afrosoft.dto.request.ProductRequest;
 import zw.co.afrosoft.persistence.CategoryRepository;
 import zw.co.afrosoft.persistence.ProductRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -25,7 +28,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public Product create(ProductRequest productRequest) {
-       // logger.info("Category ={}", categoryRepository.getById(productRequest.getCategoryId()));
+       //logger.info("Category ={}", categoryRepository.getById(productRequest.getCategoryId()));
+        LocalDateTime currentDateTime = LocalDateTime.now();
         Category category = categoryRepository.findById(productRequest.getCategoryId()).get();
         Product product = new Product();
         product.setName(productRequest.getName());
@@ -34,10 +38,28 @@ public class ProductServiceImpl implements ProductService {
         product.setSellingPrice(productRequest.getSellingPrice());
         product.setQuantityOnHand(productRequest.getQuantityOnHand());
         product.setCategory(category);
+        product.setDateCreated(currentDateTime);
+        product.setDateModified(currentDateTime);
         return productRepository.save(product);
     }
 
     public List<Product> listAll() {
         return productRepository.findAll();
+    }
+
+    @Override
+    public Product update(UpdateProductRequest updateProductRequest) {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        Product product = productRepository.findById(updateProductRequest.getId()).get();
+        product.setDateModified(currentDateTime);
+        product.setDescription(updateProductRequest.getDescription());
+        product.setPurchasePrice(updateProductRequest.getPurchasePrice());
+        product.setSellingPrice(updateProductRequest.getSellingPrice());
+        product.setName(updateProductRequest.getName());
+        return product;
+    }
+
+    private void validateRequest(ProductRequest productRequest){
+
     }
 }
