@@ -22,7 +22,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-
     @Override
     public Employee create(EmployeeRequest employeeRequest) {
         LocalDateTime currentDateTime = LocalDateTime.now();

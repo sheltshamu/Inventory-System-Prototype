@@ -12,7 +12,6 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StockTakeRequest {
-    private Long id;
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;

@@ -1,5 +1,6 @@
 package zw.co.afrosoft.service;
 
+import org.springframework.stereotype.Service;
 import zw.co.afrosoft.domain.Employee;
 import zw.co.afrosoft.domain.StockTake;
 import zw.co.afrosoft.dto.request.StockTakeRequest;
@@ -7,7 +8,7 @@ import zw.co.afrosoft.persistence.EmployeeRepository;
 import zw.co.afrosoft.persistence.StockTakeRepository;
 
 import java.time.LocalDateTime;
-
+@Service
 public class StockTakeServiceImpl implements StockTakeService{
 
     private final StockTakeRepository stockTakeRepository;

@@ -1,5 +1,6 @@
 package zw.co.afrosoft.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -15,13 +16,15 @@ public class StockTake extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	@JsonFormat(pattern = "yyyy-mm-dd")
 	private LocalDate date;
 
 	@Column(name = "start_time",nullable = false)
+	@JsonFormat(pattern = "HH:mm")
 	private LocalTime startTime;
 
 	@Column(name = "end_time",nullable = false)
+	@JsonFormat(pattern = "HH:mm")
 	private LocalTime endTime;
 
 	@ManyToOne
