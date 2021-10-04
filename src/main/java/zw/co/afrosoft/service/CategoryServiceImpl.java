@@ -1,9 +1,11 @@
 package zw.co.afrosoft.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import zw.co.afrosoft.domain.Category;
 import zw.co.afrosoft.dto.UpdateCategoryRequest;
 import zw.co.afrosoft.dto.request.CategoryRequest;
+import zw.co.afrosoft.exception.MissingFieldException;
 import zw.co.afrosoft.persistence.CategoryRepository;
 
 import java.time.LocalDateTime;
@@ -17,9 +19,9 @@ public class CategoryServiceImpl implements CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-
     @Override
     public Category create(CategoryRequest categoryRequest) {
+        validateRequest(categoryRequest);
         Category category = new Category();
         LocalDateTime currentDateTime = LocalDateTime.now();
         category.setDateCreated(currentDateTime);
@@ -51,5 +53,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category findCategoryById(Long id) {
         return categoryRepository.findById(id).get();
+    }
+
+    private void validateRequest(CategoryRequest categoryRequest){
+        if (StringUtils.isEmpty(categoryRequest.getName())){
+            throw new MissingFieldException("name");
+        }
     }
 }
