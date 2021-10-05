@@ -57,7 +57,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     private void validateRequest(CategoryRequest categoryRequest){
         if (StringUtils.isEmpty(categoryRequest.getName())){
-            throw new MissingFieldException("name");
+            throw new MissingFieldException("field  is missing",categoryRequest.getName());
         }
     }
 }

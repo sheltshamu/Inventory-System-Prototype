@@ -1,4 +1,8 @@
 package zw.co.afrosoft.persistence;
 
-public interface StockTakeDetailRepository extends BaseRepository{
+import org.springframework.stereotype.Repository;
+import zw.co.afrosoft.domain.StockTakeDetail;
+
+@Repository
+public interface StockTakeDetailRepository extends BaseRepository<StockTakeDetail>{
 }

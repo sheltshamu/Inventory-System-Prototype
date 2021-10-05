@@ -16,5 +16,4 @@ public class UpdateProductRequest {
     private double purchasePrice;
     private double sellingPrice;
     private int quantityOnHand;
-   // private Long  categoryId;
 }
