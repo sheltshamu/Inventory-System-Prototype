@@ -5,7 +5,6 @@ import org.springframework.util.StringUtils;
 import zw.co.afrosoft.domain.Category;
 import zw.co.afrosoft.dto.UpdateCategoryRequest;
 import zw.co.afrosoft.dto.request.CategoryRequest;
-import zw.co.afrosoft.exception.MissingFieldException;
 import zw.co.afrosoft.persistence.CategoryRepository;
 
 import java.time.LocalDateTime;
@@ -57,7 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     private void validateRequest(CategoryRequest categoryRequest){
         if (StringUtils.isEmpty(categoryRequest.getName())){
-            throw new MissingFieldException("field  is missing",categoryRequest.getName());
+          //  throw new MissingFieldException("name");
         }
     }
 }

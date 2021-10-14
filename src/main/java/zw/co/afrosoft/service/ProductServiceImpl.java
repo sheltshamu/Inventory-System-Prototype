@@ -5,10 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import zw.co.afrosoft.domain.Category;
 import zw.co.afrosoft.domain.Product;
+import zw.co.afrosoft.domain.ProductStockTake;
 import zw.co.afrosoft.dto.UpdateProductRequest;
 import zw.co.afrosoft.dto.request.ProductRequest;
+import zw.co.afrosoft.exception.NoRecordExistException;
 import zw.co.afrosoft.persistence.CategoryRepository;
 import zw.co.afrosoft.persistence.ProductRepository;
+import zw.co.afrosoft.persistence.ProductStockTakeRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,32 +22,43 @@ public class ProductServiceImpl implements ProductService {
     Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     private final ProductRepository productRepository;
-
     private final CategoryRepository categoryRepository;
+    private final ProductStockTakeRepository productStockTakeRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository, ProductStockTakeRepository productStockTakeRepository) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.productStockTakeRepository = productStockTakeRepository;
     }
 
     public Product create(ProductRequest productRequest) {
        //logger.info("Category ={}", categoryRepository.getById(productRequest.getCategoryId()));
+        ProductStockTake productStockTake = productStockTakeRepository.findById(productRequest.getProductStockTakeId()).get();
         LocalDateTime currentDateTime = LocalDateTime.now();
-        Category category = categoryRepository.findById(productRequest.getCategoryId()).get();
-        Product product = new Product();
-        product.setName(productRequest.getName());
-        product.setDescription(productRequest.getDescription());
-        product.setPurchasePrice(productRequest.getPurchasePrice());
-        product.setSellingPrice(productRequest.getSellingPrice());
-        product.setQuantityOnHand(productRequest.getQuantityOnHand());
-        product.setCategory(category);
-        product.setDateCreated(currentDateTime);
-        product.setDateModified(currentDateTime);
-        return productRepository.save(product);
+        Optional<Category> category = categoryRepository.findById(productRequest.getCategoryId());
+        if(category.isPresent()) {
+            Product product = new Product();
+            product.setName(productRequest.getName());
+            product.setDescription(productRequest.getDescription());
+            product.setPurchasePrice(productRequest.getPurchasePrice());
+            product.setSellingPrice(productRequest.getSellingPrice());
+            product.setQuantityOnHand(productRequest.getQuantityOnHand());
+            product.setCategory(category.get());
+            product.setDateCreated(currentDateTime);
+            product.setDateModified(currentDateTime);
+            productRepository.save(product);
+            productStockTake.setProduct(product);
+            productStockTakeRepository.save(productStockTake);
+            return product;
+        }else{
+            throw new NoRecordExistException("Not found","category","ew","qwq");
+        }
+
     }
 
     public List<Product> listAll() {
-        return productRepository.findAll();
+        List<Product> product=productRepository.findAll();
+        return product;
     }
 
     @Override

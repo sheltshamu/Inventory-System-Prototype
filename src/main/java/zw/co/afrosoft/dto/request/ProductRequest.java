@@ -1,9 +1,11 @@
 package zw.co.afrosoft.dto.request;
 
+
 import lombok.*;
 import zw.co.afrosoft.domain.Category;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -17,6 +19,6 @@ public class ProductRequest {
     private double sellingPrice;
     private int quantityOnHand;
     private Long  categoryId;
-
+    private Long productStockTakeId;
 
 }

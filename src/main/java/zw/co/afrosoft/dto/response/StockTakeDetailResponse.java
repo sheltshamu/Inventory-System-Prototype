@@ -1,13 +1,13 @@
 package zw.co.afrosoft.dto.response;
 
 import lombok.Getter;
-import zw.co.afrosoft.domain.StockTakeDetail;
+import zw.co.afrosoft.domain.ProductStockTake;
 @Getter
 public class StockTakeDetailResponse {
-    private final StockTakeDetail stockTakeDetail;
+    private final ProductStockTake productStockTake;
 
-    public StockTakeDetailResponse(StockTakeDetail stockTakeDetail) {
-        this.stockTakeDetail = stockTakeDetail;
+    public StockTakeDetailResponse(ProductStockTake productStockTake) {
+        this.productStockTake = productStockTake;
     }
 
 

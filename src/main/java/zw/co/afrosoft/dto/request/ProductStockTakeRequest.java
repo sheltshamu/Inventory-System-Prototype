@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class StockTakeDetailRequest {
+public class ProductStockTakeRequest {
     @NotNull(message = "productId is required")
     private Long productId;
     @NotNull(message = "stockTakeId is required")
