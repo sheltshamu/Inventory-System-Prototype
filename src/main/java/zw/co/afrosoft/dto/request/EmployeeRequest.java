@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Setter
@@ -11,19 +12,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class EmployeeRequest {
-    @NotNull
-    @NotBlank(message = "firstname is required")
+public class EmployeeRequest implements Serializable {
     private String firstname;
-    @NotNull
-    @NotBlank(message = "lastname is required")
     private String lastname;
-    @NotNull
-    @NotBlank(message = "date of birth is required")
     private LocalDate dateOfBirth;
-    @NotNull
-    @NotBlank(message = "firstname is required")
     private String phoneNumber;
-
     private String email;
 }

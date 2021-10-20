@@ -19,6 +19,5 @@ public class ProductRequest {
     private double sellingPrice;
     private int quantityOnHand;
     private Long  categoryId;
-    private Long productStockTakeId;
 
 }

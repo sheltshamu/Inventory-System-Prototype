@@ -1,8 +1,10 @@
 package zw.co.afrosoft.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -18,6 +20,7 @@ public class Employee extends  BaseEntity{
 	@Column(nullable = false,length = 25)
 	private String lastname;
 	@Column(nullable = false,length = 25)
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	private LocalDate dateOfBirth;
 	@Column(unique = true,length = 10)
 	private String phoneNumber;

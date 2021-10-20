@@ -8,6 +8,7 @@ import zw.co.afrosoft.domain.Product;
 import zw.co.afrosoft.dto.request.ProductRequest;
 import zw.co.afrosoft.dto.response.ProductResponse;
 import zw.co.afrosoft.persistence.CategoryRepository;
+import zw.co.afrosoft.service.ProductService;
 import zw.co.afrosoft.service.ProductServiceImpl;
 
 import javax.validation.Valid;
@@ -18,12 +19,12 @@ import java.util.List;
  @RequestMapping("/api/v1/product")
 public class ProductController {
 
-    private final ProductServiceImpl productService;
+    private final ProductService productService;
     private final CategoryRepository categoryService;
 
     Logger logger = LoggerFactory.getLogger(ProductController.class);
 
-    public ProductController(ProductServiceImpl productService, CategoryRepository categoryService) {
+    public ProductController(ProductService productService, CategoryRepository categoryService) {
         this.productService = productService;
         this.categoryService = categoryService;
     }

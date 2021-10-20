@@ -33,7 +33,6 @@ public class ProductServiceImpl implements ProductService {
 
     public Product create(ProductRequest productRequest) {
        //logger.info("Category ={}", categoryRepository.getById(productRequest.getCategoryId()));
-        ProductStockTake productStockTake = productStockTakeRepository.findById(productRequest.getProductStockTakeId()).get();
         LocalDateTime currentDateTime = LocalDateTime.now();
         Optional<Category> category = categoryRepository.findById(productRequest.getCategoryId());
         if(category.isPresent()) {
@@ -47,8 +46,6 @@ public class ProductServiceImpl implements ProductService {
             product.setDateCreated(currentDateTime);
             product.setDateModified(currentDateTime);
             productRepository.save(product);
-            productStockTake.setProduct(product);
-            productStockTakeRepository.save(productStockTake);
             return product;
         }else{
             throw new NoRecordExistException("Not found","category","ew","qwq");

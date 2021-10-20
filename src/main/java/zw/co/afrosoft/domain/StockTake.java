@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -30,13 +31,6 @@ public class StockTake extends BaseEntity{
 	@ManyToOne
 	@JoinColumn(name = "employee_id")
 	private Employee employee;
-
-	public StockTake(LocalDate date, LocalTime startTime, LocalTime endTime, Employee employee) {
-		this.date = date;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.employee = employee;
-	}
 
 	public LocalDate getDate() {
 		return date;

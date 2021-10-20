@@ -8,7 +8,7 @@ import javax.persistence.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "product_stocktake")
 public class ProductStockTake extends BaseEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,12 +23,6 @@ public class ProductStockTake extends BaseEntity{
 	private Product product;
 
 	private int qtyCounted;
-
-	public ProductStockTake(StockTake stockTake, Product product, int qtyCounted) {
-		this.stockTake = stockTake;
-		this.product = product;
-		this.qtyCounted = qtyCounted;
-	}
 
 	public StockTake getStockTake() {
 		return stockTake;
