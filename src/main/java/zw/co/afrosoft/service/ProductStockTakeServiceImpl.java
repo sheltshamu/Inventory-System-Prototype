@@ -38,14 +38,17 @@ public class ProductStockTakeServiceImpl implements ProductStockTakeService{
         productStockTake.setDateModified(auditTime);
 
         Optional<Product> product = productRepository.findById(productStockTakeRequest.getProductId());
-        if (product.isPresent()) {
-            productStockTake.setProduct(product.get());
-        }
+        if (!product.isPresent())
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Product not found");
+
         Optional<StockTake> stockTake = stockTakeRepository.findById(productStockTakeRequest.getStockTakeId());
-        if(stockTake.isPresent()){
-            productStockTake.setStockTake(stockTake.get());
-        }
+        if(!stockTake.isPresent())
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("StockTake not found");
+
+        productStockTake.setProduct(product.get());
+        productStockTake.setStockTake(stockTake.get());
         productStockTakeRepository.save(productStockTake);
-        return ResponseEntity.status(HttpStatus.OK).body("OK");
+
+        return ResponseEntity.status(HttpStatus.OK).body(productStockTake);
     }
 }

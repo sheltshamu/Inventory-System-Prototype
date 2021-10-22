@@ -1,5 +1,7 @@
 package zw.co.afrosoft.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zw.co.afrosoft.domain.Category;
 import zw.co.afrosoft.dto.request.CategoryRequest;
@@ -32,14 +34,18 @@ public class CategoryController {
     }
 
    @PostMapping("/create")
-    public CategoryResponse create(@Valid @RequestBody CategoryRequest categoryRequest){
-        Category category = categoryService.create(categoryRequest);
-        return new CategoryResponse(category);
+    public ResponseEntity create(@Valid @RequestBody CategoryRequest categoryRequest){
+        return ResponseEntity.status(HttpStatus.OK).body(categoryService.create(categoryRequest));
    }
 
    @DeleteMapping("/{id}")
    public void delete(@PathVariable Long id){
         categoryService.delete(id);
+   }
+
+   @GetMapping("/get-by-id/{id}")
+    public ResponseEntity getById(@RequestParam("id") Long id){
+        return categoryService.findCategoryById(id);
    }
 
 }

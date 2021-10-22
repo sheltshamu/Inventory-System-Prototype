@@ -1,7 +1,7 @@
 package zw.co.afrosoft.exception;
 
 public class NoProductFoundException extends BusinessException{
-    private Object identifierValue;
+    private final Object identifierValue;
 
     public NoProductFoundException(String message, Object identifierValue) {
         super(message);

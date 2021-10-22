@@ -1,8 +1,12 @@
 package zw.co.afrosoft.service;
 
+import org.springframework.http.ResponseEntity;
 import zw.co.afrosoft.domain.StockTake;
 import zw.co.afrosoft.dto.request.StockTakeRequest;
-@FunctionalInterface
+
+import java.util.List;
+
 public interface StockTakeService {
-    StockTake create(StockTakeRequest stockTakeRequest);
+    ResponseEntity create(StockTakeRequest stockTakeRequest);
+    ResponseEntity getAll();
 }

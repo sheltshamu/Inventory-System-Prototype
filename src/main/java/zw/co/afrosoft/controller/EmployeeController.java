@@ -29,10 +29,9 @@ public class EmployeeController {
     }
 
     @PostMapping("/save")
-    public EmployeeResponse save(@Valid @RequestBody EmployeeRequest employeeRequest){
+    public ResponseEntity save(@Valid @RequestBody EmployeeRequest employeeRequest){
         logger.info("Save Employee: EmployeeRequest={}" +employeeRequest);
-        Employee employee = employeeService.create(employeeRequest);
-        return new EmployeeResponse(employee);
+        return ResponseEntity.ok().body(employeeService.create(employeeRequest));
     }
 
     @DeleteMapping(value = "/{id}")
@@ -42,10 +41,8 @@ public class EmployeeController {
     }
 
     @PutMapping("/update")
-    public EmployeeResponse update(@Valid @RequestBody UpdateEmployeeRequest updateEmployeeRequest) {
-        logger.info("Update Employee: EmployeeRequest={}" + updateEmployeeRequest);
-        Employee employee = employeeService.update(updateEmployeeRequest);
-        return new EmployeeResponse(employee);
+    public ResponseEntity update(@Valid @RequestBody UpdateEmployeeRequest updateEmployeeRequest) {
+        return employeeService.update(updateEmployeeRequest);
     }
 
     @GetMapping("/getAll")

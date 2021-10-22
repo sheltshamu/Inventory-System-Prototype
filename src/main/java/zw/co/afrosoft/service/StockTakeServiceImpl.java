@@ -1,5 +1,7 @@
 package zw.co.afrosoft.service;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import zw.co.afrosoft.domain.Employee;
 import zw.co.afrosoft.domain.StockTake;
@@ -8,6 +10,8 @@ import zw.co.afrosoft.persistence.EmployeeRepository;
 import zw.co.afrosoft.persistence.StockTakeRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Service
 public class StockTakeServiceImpl implements StockTakeService{
 
@@ -20,7 +24,7 @@ public class StockTakeServiceImpl implements StockTakeService{
     }
 
     @Override
-    public StockTake create(StockTakeRequest stockTakeRequest) {
+    public ResponseEntity create(StockTakeRequest stockTakeRequest) {
         Employee employee = employeeRepository.findById(stockTakeRequest.getEmployeeId()).get();
         LocalDateTime currentDateTime = LocalDateTime.now();
         StockTake stockTake = new StockTake();
@@ -30,6 +34,14 @@ public class StockTakeServiceImpl implements StockTakeService{
         stockTake.setEmployee(employee);
         stockTake.setDateCreated(currentDateTime);
         stockTake.setDateModified(currentDateTime);
-        return stockTake;
+        return ResponseEntity.ok(stockTake);
     }
+
+    @Override
+    public ResponseEntity getAll() {
+        List<StockTake> stockTakes = stockTakeRepository.findAll();
+        return ResponseEntity.ok(stockTakes);
+    }
+
+
 }

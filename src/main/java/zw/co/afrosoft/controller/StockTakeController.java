@@ -1,5 +1,7 @@
 package zw.co.afrosoft.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zw.co.afrosoft.domain.StockTake;
 import zw.co.afrosoft.dto.request.StockTakeRequest;
@@ -16,8 +18,7 @@ public class StockTakeController {
     }
 
     @PostMapping
-    public StockTakeResponse create(@RequestBody StockTakeRequest stockTakeRequest){
-        StockTake stockTake= stockTakeService.create(stockTakeRequest);
-        return new StockTakeResponse(stockTake);
+    public ResponseEntity create(@RequestBody StockTakeRequest stockTakeRequest){
+        return stockTakeService.create(stockTakeRequest);
     }
 }

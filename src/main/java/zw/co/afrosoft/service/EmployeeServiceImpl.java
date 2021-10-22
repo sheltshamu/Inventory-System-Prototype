@@ -1,6 +1,8 @@
 package zw.co.afrosoft.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import zw.co.afrosoft.domain.Employee;
@@ -15,7 +17,7 @@ import java.util.Optional;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
     @Autowired
     public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
@@ -23,7 +25,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee create(EmployeeRequest employeeRequest) {
+    public ResponseEntity create(EmployeeRequest employeeRequest) {
         LocalDateTime currentDateTime = LocalDateTime.now();
         Employee employee = new Employee();
         employee.setDateCreated(currentDateTime);
@@ -34,25 +36,33 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setPhoneNumber(employeeRequest.getPhoneNumber());
         employee.setEmail(employeeRequest.getEmail());
         employeeRepository.save(employee);
-        return employee;
+        return ResponseEntity.status(HttpStatus.OK).body(employee);
     }
 
     @Override
-    public void delete(Long id) {
-        employeeRepository.deleteById(id);
+    public ResponseEntity<Object> delete(Long id) {
+        Optional<Employee> existingEmployee = employeeRepository.findById(id);
+        if (!existingEmployee.isPresent())
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Employee does not exist");
+       // return employeeRepository.delete(existingEmployee.get());
+        return null;
     }
 
 
     @Override
-    public Employee update(UpdateEmployeeRequest updateEmployeeRequest) {
-       Employee employee = employeeRepository.findById(updateEmployeeRequest.getId()).get();
-       employee.setPhoneNumber(updateEmployeeRequest.getPhoneNumber());
-       employee.setFirstname(updateEmployeeRequest.getFirstname());
-       employee.setLastname(updateEmployeeRequest.getLastname());
-       employee.setEmail(updateEmployeeRequest.getEmail());
-       employee.setDateOfBirth(updateEmployeeRequest.getDateOfBirth());
-       employee.setEmail(updateEmployeeRequest.getEmail());
-        return employeeRepository.save(employee);
+    public ResponseEntity update(UpdateEmployeeRequest updateEmployeeRequest) {
+        LocalDateTime currentDateTime =LocalDateTime.now();
+       Optional<Employee> existingEmployee = employeeRepository.findById(updateEmployeeRequest.getId());
+       if (!existingEmployee.isPresent())
+           return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found");
+      Employee employee = existingEmployee.get();
+      employee.setEmail(updateEmployeeRequest.getEmail());
+      employee.setPhoneNumber(updateEmployeeRequest.getPhoneNumber());
+      employee.setFirstname(updateEmployeeRequest.getFirstname());
+      employee.setLastname(updateEmployeeRequest.getLastname());
+      employee.setDateOfBirth(updateEmployeeRequest.getDateOfBirth());
+      employee.setDateModified(currentDateTime);
+      return ResponseEntity.status(HttpStatus.OK).body(employee);
     }
 
     @Override
@@ -61,11 +71,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee getEmployeeById(Long id) {
+    public ResponseEntity getEmployeeById(Long id) {
         Optional<Employee> employee = employeeRepository.findById(id);
-        if (!employee.isPresent()) {
-            throw new RuntimeException("Employee "+ id + "Not Found");
-        }
-        return employee.get();
+        if (!employee.isPresent())
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Employee not found");
+
+        return ResponseEntity.status(HttpStatus.OK).body(employee.get());
+
     }
 }

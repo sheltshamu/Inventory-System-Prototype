@@ -1,5 +1,6 @@
 package zw.co.afrosoft.service;
 
+import org.springframework.http.ResponseEntity;
 import zw.co.afrosoft.domain.Employee;
 import zw.co.afrosoft.dto.UpdateEmployeeRequest;
 import zw.co.afrosoft.dto.request.EmployeeRequest;
@@ -8,13 +9,13 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    Employee create(EmployeeRequest employeeRequest);
+    ResponseEntity create(EmployeeRequest employeeRequest);
 
-    void delete(Long id);
+    Object delete(Long id);
 
-    Employee update(UpdateEmployeeRequest updateEmployeeRequest);
+    ResponseEntity update(UpdateEmployeeRequest updateEmployeeRequest);
 
     List<Employee> listAll();
 
-    Employee getEmployeeById(Long id);
+    ResponseEntity getEmployeeById(Long id);
 }
