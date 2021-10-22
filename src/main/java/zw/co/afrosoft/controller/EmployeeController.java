@@ -19,9 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/employee")
 public class EmployeeController {
-
     private final EmployeeService employeeService;
-
     Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 
     public EmployeeController(EmployeeServiceImpl employeeService) {
