@@ -1,5 +1,6 @@
 package zw.co.afrosoft.service;
 
+import org.springframework.http.ResponseEntity;
 import zw.co.afrosoft.domain.Product;
 import zw.co.afrosoft.dto.UpdateProductRequest;
 import zw.co.afrosoft.dto.request.ProductRequest;
@@ -9,9 +10,9 @@ import java.util.List;
 
 public interface ProductService {
 
-    Product create(ProductRequest productRequest);
+    ProductResponse create(ProductRequest productRequest);
 
     List<Product> listAll();
 
-    Product update(UpdateProductRequest updateProductRequest);
+    ProductResponse update(UpdateProductRequest updateProductRequest);
 }

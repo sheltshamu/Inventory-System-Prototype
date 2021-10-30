@@ -7,6 +7,7 @@ import zw.co.afrosoft.domain.Product;
 import zw.co.afrosoft.domain.ProductStockTake;
 import zw.co.afrosoft.domain.StockTake;
 import zw.co.afrosoft.dto.request.ProductStockTakeRequest;
+import zw.co.afrosoft.dto.response.ProductStockTakeResponse;
 import zw.co.afrosoft.exception.NoProductFoundException;
 import zw.co.afrosoft.exception.NoRecordExistException;
 import zw.co.afrosoft.persistence.ProductRepository;
@@ -30,7 +31,7 @@ public class ProductStockTakeServiceImpl implements ProductStockTakeService{
     }
 
     @Override
-    public ResponseEntity create(ProductStockTakeRequest productStockTakeRequest) {
+    public ProductStockTakeResponse create(ProductStockTakeRequest productStockTakeRequest) {
         LocalDateTime auditTime =LocalDateTime.now();
         ProductStockTake productStockTake = new ProductStockTake();
         productStockTake.setQtyCounted(productStockTakeRequest.getQtyCounted());
@@ -39,16 +40,15 @@ public class ProductStockTakeServiceImpl implements ProductStockTakeService{
 
         Optional<Product> product = productRepository.findById(productStockTakeRequest.getProductId());
         if (!product.isPresent())
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Product not found");
+            throw new RuntimeException("Product not found");
 
         Optional<StockTake> stockTake = stockTakeRepository.findById(productStockTakeRequest.getStockTakeId());
         if(!stockTake.isPresent())
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("StockTake not found");
-
+            throw new RuntimeException("Stock not found");
         productStockTake.setProduct(product.get());
         productStockTake.setStockTake(stockTake.get());
         productStockTakeRepository.save(productStockTake);
 
-        return ResponseEntity.status(HttpStatus.OK).body(productStockTake);
+        return new ProductStockTakeResponse(productStockTake);
     }
 }

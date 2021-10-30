@@ -7,10 +7,13 @@ import org.springframework.util.StringUtils;
 import zw.co.afrosoft.domain.Category;
 import zw.co.afrosoft.dto.UpdateCategoryRequest;
 import zw.co.afrosoft.dto.request.CategoryRequest;
+import zw.co.afrosoft.dto.response.CategoryResponse;
+import zw.co.afrosoft.exception.NoRecordExistException;
 import zw.co.afrosoft.persistence.CategoryRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -23,14 +26,14 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public ResponseEntity create(CategoryRequest categoryRequest) {
+    public CategoryResponse create(CategoryRequest categoryRequest) {
         Category category = new Category();
         LocalDateTime currentDateTime = LocalDateTime.now();
         category.setDateCreated(currentDateTime);
         category.setDateModified(currentDateTime);
         category.setName(categoryRequest.getName());
         categoryRepository.save(category);
-        return ResponseEntity.status(HttpStatus.OK).body(category);
+        return new CategoryResponse(category);
     }
 
     @Override
@@ -39,29 +42,34 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void delete(Long id) {
-        categoryRepository.deleteById(id);
+    public CategoryResponse delete(Long id) {
+        Optional<Category> existingCategory= categoryRepository.findById(id);
+        if (!existingCategory.isPresent())
+            throw new RuntimeException("Not found");
+        Category category = existingCategory.get();
+        categoryRepository.delete(category);
+        return new CategoryResponse(category);
     }
 
     @Override
-    public ResponseEntity update(UpdateCategoryRequest updateCategoryRequest) {
+    public CategoryResponse update(UpdateCategoryRequest updateCategoryRequest) {
         LocalDateTime currentDateTime = LocalDateTime.now();
         Optional<Category> existingCategory = categoryRepository.findById(updateCategoryRequest.getId());
         if (!existingCategory.isPresent())
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category not found");
+            throw new NoSuchElementException("Category not found");
         Category category=existingCategory.get();
         category.setDateModified(currentDateTime);
         category.setName(updateCategoryRequest.getName());
-        return ResponseEntity.status(HttpStatus.OK).body(category);
+        return new CategoryResponse(category);
     }
 
     @Override
-    public ResponseEntity findCategoryById(Long id) {
+    public CategoryResponse findCategoryById(Long id) {
         Optional<Category> existingCategory = categoryRepository.findById(id);
         if (!existingCategory.isPresent())
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Category with id {0} Not found");
+            throw new NoSuchElementException("Category not found");
         Category category=existingCategory.get();
-        return ResponseEntity.status(HttpStatus.OK).body(category);
+        return new CategoryResponse(category);
     }
 
 }

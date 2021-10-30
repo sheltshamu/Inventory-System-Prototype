@@ -2,12 +2,15 @@ package zw.co.afrosoft.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import zw.co.afrosoft.domain.Category;
 import zw.co.afrosoft.domain.Product;
 import zw.co.afrosoft.domain.ProductStockTake;
 import zw.co.afrosoft.dto.UpdateProductRequest;
 import zw.co.afrosoft.dto.request.ProductRequest;
+import zw.co.afrosoft.dto.response.ProductResponse;
 import zw.co.afrosoft.exception.NoRecordExistException;
 import zw.co.afrosoft.persistence.CategoryRepository;
 import zw.co.afrosoft.persistence.ProductRepository;
@@ -31,11 +34,12 @@ public class ProductServiceImpl implements ProductService {
         this.productStockTakeRepository = productStockTakeRepository;
     }
 
-    public Product create(ProductRequest productRequest) {
-       //logger.info("Category ={}", categoryRepository.getById(productRequest.getCategoryId()));
+    public ProductResponse create(ProductRequest productRequest) {
         LocalDateTime currentDateTime = LocalDateTime.now();
         Optional<Category> category = categoryRepository.findById(productRequest.getCategoryId());
-        if(category.isPresent()) {
+        if(!category.isPresent())
+            throw new   RuntimeException("Category Not Found");
+
             Product product = new Product();
             product.setName(productRequest.getName());
             product.setDescription(productRequest.getDescription());
@@ -46,10 +50,7 @@ public class ProductServiceImpl implements ProductService {
             product.setDateCreated(currentDateTime);
             product.setDateModified(currentDateTime);
             productRepository.save(product);
-            return product;
-        }else{
-            throw new NoRecordExistException("Not found","category","ew","qwq");
-        }
+            return new ProductResponse(product);
 
     }
 
@@ -59,15 +60,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product update(UpdateProductRequest updateProductRequest) {
+    public ProductResponse update(UpdateProductRequest updateProductRequest) {
         LocalDateTime currentDateTime = LocalDateTime.now();
-        Product product = productRepository.findById(updateProductRequest.getId()).get();
-        product.setDateModified(currentDateTime);
+        Optional<Product> existingProduct = productRepository.findById(updateProductRequest.getId());
+        if (!existingProduct.isPresent())
+             throw new   RuntimeException("Product Not Found");
+        Product product = existingProduct.get();
         product.setDescription(updateProductRequest.getDescription());
         product.setPurchasePrice(updateProductRequest.getPurchasePrice());
         product.setSellingPrice(updateProductRequest.getSellingPrice());
         product.setName(updateProductRequest.getName());
-        return product;
+        return new ProductResponse(product);
     }
 
     private void validateRequest(ProductRequest productRequest){
