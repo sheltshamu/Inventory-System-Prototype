@@ -1,15 +1,10 @@
 package zw.co.afrosoft.service;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import zw.co.afrosoft.domain.Product;
 import zw.co.afrosoft.domain.ProductStockTake;
 import zw.co.afrosoft.domain.StockTake;
 import zw.co.afrosoft.dto.request.ProductStockTakeRequest;
 import zw.co.afrosoft.dto.response.ProductStockTakeResponse;
-import zw.co.afrosoft.exception.NoProductFoundException;
-import zw.co.afrosoft.exception.NoRecordExistException;
 import zw.co.afrosoft.persistence.ProductRepository;
 import zw.co.afrosoft.persistence.ProductStockTakeRepository;
 import zw.co.afrosoft.persistence.StockTakeRepository;

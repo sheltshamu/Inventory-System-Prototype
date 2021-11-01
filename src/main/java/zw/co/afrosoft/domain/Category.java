@@ -12,6 +12,6 @@ import javax.persistence.*;
 @Entity
 public class Category extends  BaseEntity{
 
-	@Column(nullable = false, length=10, unique = true)
+	@Column(nullable = false, length=25, unique = true)
 	private String name;
 }
